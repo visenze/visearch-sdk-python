@@ -1,4 +1,7 @@
-import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import BytesIO as StringIO
 from PIL import Image
 from requests.auth import HTTPBasicAuth
 from .bind import bind_method, build_parameters, build_path
@@ -103,11 +106,11 @@ class ViSearchAPI(object):
             if (resize_type_name == 'list' or resize_type_name == 'tuple') and len(resize_settings) == 3:
                 dimensions, quality = (resize_settings[0], resize_settings[1]), resize_settings[2]
             else:
-                raise ViSearchClientError("invalid resize settings: {}".format(resize_settings))
+                raise ViSearchClientError("invalid resize settings: {0}".format(resize_settings))
         image = Image.open(image_path)
         image = image.resize(dimensions, Image.ANTIALIAS)
 
-        output = StringIO.StringIO()
+        output = StringIO()
         image.save(output, 'JPEG', quality=quality)
         contents = output.getvalue()
         output.close()
@@ -132,7 +135,7 @@ class ViSearchAPI(object):
             if (type(box).__name__ == 'list' or type(box).__name__ == 'tuple') and len(box) == 4:
                 parameters.update({'box': ','.join(map(str, box))})
             else:
-                raise ViSearchClientError("invalid box: {}".format(box))
+                raise ViSearchClientError("invalid box: {0}".format(box))
 
         path = 'uploadsearch'
 

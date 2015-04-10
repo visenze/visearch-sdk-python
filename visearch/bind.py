@@ -55,33 +55,33 @@ def build_parameters(path, raw_parameters):
         for ind, image in enumerate(images):
             is_required_fields_provided = all(attr_name in image.keys() for attr_name in required_fields)
             if not is_required_fields_provided:
-                error_message = "insert api: the {}'s image doesn't provide the required fields".format(ind)
+                error_message = "insert api: the {0}'s image doesn't provide the required fields".format(ind)
                 raise ViSearchClientError(error_message)
 
         param_s = '&'.join([
                     '&'.join([
-                        '{}[{}]={}'.format(attr_name, ind, attr_value)
-                        for attr_name, attr_value in image.iteritems()
+                        '{0}[{1}]={2}'.format(attr_name, ind, attr_value)
+                        for attr_name, attr_value in image.items()
                         ])
                     for ind, image in enumerate(images)
                     ])
 
         if 'trans_id' in raw_parameters and raw_parameters['trans_id']:
-            param_s += '&trans_id={}'.format(raw_parameters['trans_id'])
+            param_s += '&trans_id={0}'.format(raw_parameters['trans_id'])
 
     elif path == 'remove':
-        param_s = '&'.join(['im_name[{}]={}'.format(ind, image_name) for ind, image_name in enumerate(raw_parameters)])
+        param_s = '&'.join(['im_name[{0}]={1}'.format(ind, image_name) for ind, image_name in enumerate(raw_parameters)])
 
     elif path in ['search', 'colorsearch', 'uploadsearch']:
         parameter_list = []
-        for attr_name, attr_value in raw_parameters.iteritems():
-            parameter_item = '{}={}'.format(attr_name, attr_value)
+        for attr_name, attr_value in raw_parameters.items():
+            parameter_item = '{0}={1}'.format(attr_name, attr_value)
             if attr_name == 'fl':
                 if type(attr_value) == list or type(attr_value) == tuple:
-                    parameter_item = '&'.join(['fl={}'.format(fl_val) for fl_val in attr_value])
+                    parameter_item = '&'.join(['fl={0}'.format(fl_val) for fl_val in attr_value])
             elif attr_name == 'fq':
                 if type(attr_value) == dict:
-                    parameter_item = '&'.join(['fq={}:{}'.format(fq_attr, fq_val) for fq_attr, fq_val in attr_value.iteritems()])
+                    parameter_item = '&'.join(['fq={0}:{1}'.format(fq_attr, fq_val) for fq_attr, fq_val in attr_value.items()])
             parameter_list.append(parameter_item)
         param_s = '&'.join(parameter_list)
 
@@ -97,7 +97,7 @@ def bind_method(api, path, method, parameters=None, files=None):
     resp = method_func(api.host + path, params=parameters, files=files, auth=api.auth_info, timeout=10*60)
 
     if resp.status_code != 200:
-        raise ViSearchAPIError(resp.status_code, "{} error".format(path), "{} error".format(path))
+        raise ViSearchAPIError(resp.status_code, "{0} error".format(path), "{0} error".format(path))
 
     resp_data = resp.json()
 

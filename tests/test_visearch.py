@@ -4,6 +4,7 @@ import unittest
 import httpretty
 import json
 import re
+import sys
 import os.path
 from visearch import client
 from visearch.bind import ViSearchAPIError, ViSearchClientError
@@ -30,7 +31,8 @@ class TestVisearch(unittest.TestCase):
         self.api = client.ViSearchAPI(self.access_key, self.secret_key)
 
         self.fixture_dir = 'tests/fixtures/'
-        images = json.load(open(os.path.join(self.fixture_dir, 'images.json')))
+        self.image_fp = open(os.path.join(self.fixture_dir, 'images.json'))
+        images = json.load(self.image_fp)
         self.inserted_images = images['inserted_images']
         self.query_image = images['query_image']
 
@@ -42,7 +44,7 @@ class TestVisearch(unittest.TestCase):
         self.uploadsearch_entpoint = "http://visearch.visenze.com/uploadsearch"
 
     def tearDown(self):
-        pass
+        self.image_fp.close()
 
     @httpretty.activate
     def test_auth_info(self):
@@ -121,8 +123,7 @@ class TestVisearch(unittest.TestCase):
                     'im_name': image['im_name'] + str(i),
                     'im_url': image['im_url']
                     })
-        with self.assertRaises(ViSearchAPIError):
-            self.api.insert(insert_images)
+        self.assertRaises(ViSearchAPIError, self.api.insert, insert_images)
 
     @httpretty.activate
     def test_insert_singleimage(self):
@@ -324,18 +325,20 @@ class TestVisearch(unittest.TestCase):
         resp = self.api.uploadsearch(image_path=image_path)
 
         self.assertEqual(request_callback.request.method, 'POST')
-        self.assertEqual(request_callback.request.headers.__dict__['type'], 'multipart/form-data')
+        if (sys.version_info > (3, 0)):
+            content_type = dict(request_callback.request.headers._headers)['Content-Type'].split(';')[0].strip()
+        else:
+            content_type = request_callback.request.headers.__dict__['type']
+        self.assertEqual(content_type, 'multipart/form-data')
         self.assertEqual(resp['status'], 'OK')
 
     def test_fileuploadsearch_filenotexist(self):
-        with self.assertRaises(IOError):
-            image_path = 'nonexists.jpg'
-            self.api.uploadsearch(image_path=image_path)
+        image_path = 'nonexists.jpg'
+        self.assertRaises(IOError, self.api.uploadsearch, image_path=image_path)
 
     def test_fileuploadsearch_fileformatnotvalid(self):
-        with self.assertRaises(IOError):
-            image_path = 'tests/fixtures/notimage.pdf'
-            self.api.uploadsearch(image_path=image_path)
+        image_path = 'tests/fixtures/notimage.pdf'
+        self.assertRaises(IOError, self.api.uploadsearch, image_path=image_path)
 
     @httpretty.activate
     def test_urluploadsearch_valid(self):
@@ -381,10 +384,9 @@ class TestVisearch(unittest.TestCase):
         self.assertEqual(resp['status'], 'OK')
 
     def test_search_box_notwellformatted(self):
-        with self.assertRaises(ViSearchClientError):
-            image_path = 'tests/fixtures/upload.jpg'
-            box = [0, 0, 10]
-            self.api.uploadsearch(image_path=image_path, box=box)
+        image_path = 'tests/fixtures/upload.jpg'
+        box = [0, 0, 10]
+        self.assertRaises(ViSearchClientError, self.api.uploadsearch, image_path=image_path, box=box)
 
     @httpretty.activate
     def test_search_resize_valid(self):
@@ -400,10 +402,9 @@ class TestVisearch(unittest.TestCase):
         self.assertEqual(resp['status'], 'OK')
 
     def test_search_resize_invalid(self):
-        with self.assertRaises(ViSearchClientError):
-            image_path = 'tests/fixtures/upload.jpg'
-            resize = (100, 100)
-            self.api.uploadsearch(image_path=image_path, resize=resize)
+        image_path = 'tests/fixtures/upload.jpg'
+        resize = (100, 100)
+        self.assertRaises(ViSearchClientError, self.api.uploadsearch, image_path=image_path, resize=resize)
 
     @httpretty.activate
     def test_search_pagination(self):
@@ -460,7 +461,7 @@ class TestVisearch(unittest.TestCase):
         fq = {'price': '100,130', 'category': '162402'}
         self.api.search(im_name, fq=fq)
 
-        self.assertEqual(request_callback.request.querystring['fq'], ['{}:{}'.format(k, v) for k, v in fq.iteritems()])
+        self.assertEqual(request_callback.request.querystring['fq'], ['{0}:{1}'.format(k, v) for k, v in fq.items()])
 
     @httpretty.activate
     def test_search_resultscore_valid_scorevalue(self):
