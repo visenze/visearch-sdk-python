@@ -23,8 +23,7 @@
       - 7.1 [Retrieving Metadata](#71-retrieving-metadata)
       - 7.2 [Filtering Results](#72-filtering-results)
       - 7.3 [Result Score](#73-result-score)
- 8. [Contribute](#8-contribute)
- 9. [Declaration](#9-declaration)
+ 8. [Declaration](#8-declaration)
 
 ----
 
@@ -284,11 +283,5 @@ score_max = 0.8
 response = api.uploadsearch(image_url=image_url, score_max=score_max, score_min=score_min)
 ```
 
-##8. Contribute
-* git clone the source code
-* install dependencies
-* run tests
-
-
-##9. Declaration
+##8. Declaration
 * The image upload.jpg included in the SDK is downloaded from http://pixabay.com/en/boots-shoes-pants-folded-fashion-690502/

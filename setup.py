@@ -32,7 +32,7 @@ setup(
     long_description=readme + '\n\n' + history,
     author="Han Xiaogang",
     author_email='xganghan@gmail.com',
-    url='https://github.com/chrishan/visearch-sdk-python',
+    url='https://github.com/visenze/visearch-sdk-python',
     packages=[
         'visearch',
     ],
