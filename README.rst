@@ -25,7 +25,7 @@ search methods based on the ViSearch Search API - pre-indexed search,
 color search and upload search. The ViSearch Python SDK also provides an
 easy integration of the ViSearch Data API which includes data inserting
 and data removing. For source code and references, visit the github
-`repository <https://github.com/chrishan/visearch-sdk-python>`__.
+`repository <https://github.com/visenze/visearch-sdk-python>`__.
 
 * Supported on Python 2.6+ and 3.3+
 
@@ -69,11 +69,11 @@ publicly downloadable URL. ViSearch will parallelly fetch your images
 from the given URLs, and index the downloaded for searching. After the
 image indexes are built, you can start searching for `similar images
 using the unique
-identifier <https://github.com/visenze/visearch-sdk-java/blob/master/README.md#51-pre-indexed-search>`__,
+identifier <https://github.com/visenze/visearch-sdk-python/blob/master/README.md#51-pre-indexed-search>`__,
 `using a
-color <https://github.com/visenze/visearch-sdk-java/blob/master/README.md#52-color-search>`__,
+color <https://github.com/visenze/visearch-sdk-python/blob/master/README.md#52-color-search>`__,
 or `using another
-image <https://github.com/visenze/visearch-sdk-java/blob/master/README.md#53-upload-search>`__.
+image <https://github.com/visenze/visearch-sdk-python/blob/master/README.md#53-upload-search>`__.
 
 To index your images, prepare a list of images and call the /insert
 endpoint.
@@ -89,9 +89,7 @@ endpoint.
     # calls the /insert endpoint to index the image
     response = api.insert(images)
 
-    Each ``insert`` call to ViSearch accepts a maximum of 100 images. We
-    recommend indexing your images in batches of 100 for optimized image
-    indexing speed.
+Each ``insert`` call to ViSearch accepts a maximum of 100 images. We recommend indexing your images in batches of 100 for optimized image indexing speed.
 
 4.2 Image with Metadata
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -184,8 +182,7 @@ the image will not be found in any search result.
     image_names = ["red_dress", "blue_dress"]
     response = api.remove(image_names)
 
-    We recommend calling ``remove`` in batches of 100 images for
-    optimized image indexing speed.
+We recommend calling ``remove`` in batches of 100 images for optimized image indexing speed.
 
 5. Searching Images
 -------------------
@@ -327,8 +324,7 @@ of metadata keys for the metadata value to be returned in the ``fl``
     fl = ["price", "brand", "title", "im_url"]  #, or fl = ("price", "brand", "title", "im_url")
     response = api.uploadsearch(image_url=image_url, fl=fl)
 
-    Only metadata of type string, int, and float can be retrieved from
-    ViSearch. Metadata of type text is not available for retrieval.
+Only metadata of type string, int, and float can be retrieved from ViSearch. Metadata of type text is not available for retrieval.
 
 7.2 Filtering Results
 ~~~~~~~~~~~~~~~~~~~~~
