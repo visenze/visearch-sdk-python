@@ -27,7 +27,7 @@ easy integration of the ViSearch Data API which includes data inserting
 and data removing. For source code and references, visit the github
 `repository <https://github.com/chrishan/visearch-sdk-python>`__.
 
-* Supported on Python 2.7+ and 3.4+
+* Supported on Python 2.6+ and 3.3+
 
 2. Setup
 --------
