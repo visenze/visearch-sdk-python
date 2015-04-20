@@ -1,5 +1,4 @@
 generate_fixtures.py
-tests/fixtures/images.json
 
 *.py[cod]
 

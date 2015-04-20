@@ -1,0 +1,13 @@
+{"query_image":
+{"category": "402", "price": 150.0, "im_name": "query_image", "im_url": "http://example.com/query.jpg"},
+"inserted_images": [
+{"category": "402", "price": 130.0, "im_name": "image1", "im_url": "http://example.com/iamge1.jpg"},
+{"category": "123", "price": 770.0, "im_name": "image2", "im_url": "http://example.com/iamge2.jpg"},
+{"category": "130", "price": 85.0, "im_name": "image3", "im_url": "http://example.com/iamge3.jpg"},
+{"category": "104", "price": 124.0, "im_name": "image4", "im_url": "http://example.com/iamge4.jpg"},
+{"category": "402", "price": 190.0, "im_name": "image5", "im_url": "http://example.com/iamge5.jpg"},
+{"category": "402", "price": 190.0, "im_name": "image6", "im_url": "http://example.com/iamge6.jpg"},
+{"category": "402", "price": 120.0, "im_name": "image7", "im_url": "http://example.com/iamge7.jpg"},
+{"category": "401", "price": 200.0, "im_name": "image8", "im_url": "http://example.com/iamge8.jpg"},
+{"category": "906", "price": 90.0, "im_name": "image9", "im_url": "http://example.com/iamge9.jpg"},
+{"category": "130", "price": 95.0, "im_name": "image10", "im_url": "http://example.com/iamge10.jpg"}]}
