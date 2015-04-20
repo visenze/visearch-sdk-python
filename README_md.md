@@ -58,11 +58,11 @@ api = client.ViSearchAPI(access_key, secret_key)
 
 ###4.1 Indexing Your First Images
 
-Built for scalability, ViSearch API enables fast and accurate searches on high volume of images. Before making your first image search, you need to prepare a list of images and index them into ViSearch by calling the /insert endpoint. Each image must have a unique identifier and a publicly downloadable URL. ViSearch will parallelly fetch your images from the given URLs, and index the downloaded for searching. After the image indexes are built, you can start searching for [similar images using the unique identifier](https://github.com/visenze/visearch-sdk-python/blob/master/README.md#51-pre-indexed-search), [using a color](https://github.com/visenze/visearch-sdk-python/blob/master/README.md#52-color-search), or [using another image](https://github.com/visenze/visearch-sdk-python/blob/master/README.md#53-upload-search).
+Built for scalability, ViSearch API enables fast and accurate searches on high volume of images. Before making your first image search, you need to prepare a list of images and index them into ViSearch by calling the /insert endpoint. Each image must have a unique identifier and a publicly downloadable URL. ViSearch will parallelly fetch your images from the given URLs, and index the downloaded for searching. After the image indexes are built, you can start searching for [similar images using the unique identifier](https://github.com/visenze/visearch-sdk-python/blob/master/README_md.md#51-pre-indexed-search), [using a color](https://github.com/visenze/visearch-sdk-python/blob/master/README_md.md#52-color-search), or [using another image](https://github.com/visenze/visearch-sdk-python/blob/master/README_md.md#53-upload-search).
 
 To index your images, prepare a list of images and call the /insert endpoint. 
 
-```
+```python
 # the list of images to be indexed
 # the unique identifier of the image 'im_name', the publicly downloadable url of the image 'im_url'
 images = [
@@ -84,7 +84,7 @@ caption, tags, geo-coordinates of a photo.
 ViSearch combines the power of text search with image search. You can index your images with metadata, and leverage text based query and filtering for even more accurate image search results, for example:
 limit results within a price range
 limit results to certain tags, and some keywords in the captions
-For detailed reference for result filtering, see [Advanced Search Parameters](https://github.com/visenze/visearch-sdk-php/blob/master/README.md#7-advanced-search-parameters).
+For detailed reference for result filtering, see [Advanced Search Parameters](https://github.com/visenze/visearch-sdk-python/blob/master/README_md.md#7-advanced-search-parameters).
 
 To index your images with metadata, first you need to configure the metadata schema in [ViSearch Dashboard](https://dashboard.visenze.com). You can add and remove metadata keys, and modify the metadata types to suit your needs.
 

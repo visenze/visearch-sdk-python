@@ -69,11 +69,11 @@ publicly downloadable URL. ViSearch will parallelly fetch your images
 from the given URLs, and index the downloaded for searching. After the
 image indexes are built, you can start searching for `similar images
 using the unique
-identifier <https://github.com/visenze/visearch-sdk-python/blob/master/README.md#51-pre-indexed-search>`__,
+identifier <https://github.com/visenze/visearch-sdk-python#pre-indexed-search>`__,
 `using a
-color <https://github.com/visenze/visearch-sdk-python/blob/master/README.md#52-color-search>`__,
+color <https://github.com/visenze/visearch-sdk-python#color-search>`__,
 or `using another
-image <https://github.com/visenze/visearch-sdk-python/blob/master/README.md#53-upload-search>`__.
+image <https://github.com/visenze/visearch-sdk-python#upload-search>`__.
 
 To index your images, prepare a list of images and call the /insert
 endpoint.
@@ -104,7 +104,7 @@ filtering for even more accurate image search results, for example:
 limit results within a price range limit results to certain tags, and
 some keywords in the captions For detailed reference for result
 filtering, see `Advanced Search
-Parameters <https://github.com/visenze/visearch-sdk-php/blob/master/README.md#7-advanced-search-parameters>`__.
+Parameters <https://github.com/visenze/visearch-sdk-python#advanced-search-parameters>`__.
 
 To index your images with metadata, first you need to configure the
 metadata schema in ViSearch Dashboard (link to). You can add and remove
