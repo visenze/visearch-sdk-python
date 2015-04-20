@@ -1,8 +1,8 @@
 ViSearch Python SDK
 ===================
 
-.. image:: https://img.shields.io/travis/chrishan/visearch.svg
-        :target: https://travis-ci.org/chrishan/visearch
+.. image:: https://travis-ci.org/visenze/visearch-sdk-python.svg
+        :target: https://travis-ci.org/visenze/visearch-sdk-python
 
 .. image:: https://img.shields.io/pypi/v/visearch.svg
         :target: https://pypi.python.org/pypi/visearch
