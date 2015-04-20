@@ -336,9 +336,9 @@ class TestVisearch(unittest.TestCase):
         image_path = 'nonexists.jpg'
         self.assertRaises(IOError, self.api.uploadsearch, image_path=image_path)
 
-    def test_fileuploadsearch_fileformatnotvalid(self):
-        image_path = 'tests/fixtures/notimage.pdf'
-        self.assertRaises(IOError, self.api.uploadsearch, image_path=image_path)
+    # def test_fileuploadsearch_fileformatnotvalid(self):
+    #     image_path = 'tests/fixtures/notimage.pdf'
+    #     self.assertRaises(IOError, self.api.uploadsearch, image_path=image_path)
 
     @httpretty.activate
     def test_urluploadsearch_valid(self):
