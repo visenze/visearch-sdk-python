@@ -49,8 +49,6 @@ def build_parameters(path, raw_parameters):
         required_fields = ['im_name', 'im_url']
 
         images = raw_parameters['images']
-        # if len(images) > 100:
-        #     raise ViSearchClientError("insert api: number of images exceeded {}".format(len(images)))
 
         for ind, image in enumerate(images):
             is_required_fields_provided = all(attr_name in image.keys() for attr_name in required_fields)
@@ -58,19 +56,16 @@ def build_parameters(path, raw_parameters):
                 error_message = "insert api: the {0}'s image doesn't provide the required fields".format(ind)
                 raise ViSearchClientError(error_message)
 
-        param_s = '&'.join([
-                    '&'.join([
-                        '{0}[{1}]={2}'.format(attr_name, ind, attr_value)
-                        for attr_name, attr_value in image.items()
-                        ])
-                    for ind, image in enumerate(images)
-                    ])
+        param = {}
+        for ind, image in enumerate(images):
+            for attr_name, attr_value in image.items():
+                param['%s[%d]' % (attr_name, ind)] = attr_value
 
         if 'trans_id' in raw_parameters and raw_parameters['trans_id']:
-            param_s += '&trans_id={0}'.format(raw_parameters['trans_id'])
+            param['trans_id'] = raw_parameters['trans_id']
 
     elif path == 'remove':
-        param_s = '&'.join(['im_name[{0}]={1}'.format(ind, image_name) for ind, image_name in enumerate(raw_parameters)])
+        param = dict([('im_name[{}]'.format(ind), image_name) for ind, image_name in enumerate(raw_parameters)])
 
     elif path in ['search', 'colorsearch', 'uploadsearch']:
         parameter_list = []
@@ -83,18 +78,18 @@ def build_parameters(path, raw_parameters):
                 if type(attr_value) == dict:
                     parameter_item = '&'.join(['fq={0}:{1}'.format(fq_attr, fq_val) for fq_attr, fq_val in attr_value.items()])
             parameter_list.append(parameter_item)
-        param_s = '&'.join(parameter_list)
+        param = '&'.join(parameter_list)
 
-    return param_s
+    return param
 
 
-def bind_method(api, path, method, parameters=None, files=None):
+def bind_method(api, path, method, parameters=None, data=None, files=None):
     if method.upper() == 'POST':
-        method_func = requests.post
+        resp = requests.post(api.host + path, params=parameters, data=data, files=files, auth=api.auth_info, timeout=10*60)
     elif method.upper() == 'GET':
-        method_func = requests.get
-
-    resp = method_func(api.host + path, params=parameters, files=files, auth=api.auth_info, timeout=10*60)
+        resp = requests.get(api.host + path, params=parameters, files=files, auth=api.auth_info, timeout=10*60)
+    else:
+        raise ViSearchClientError('unsupported http method')
 
     if resp.status_code != 200:
         raise ViSearchAPIError(resp.status_code, "{0} error".format(path), "{0} error".format(path))

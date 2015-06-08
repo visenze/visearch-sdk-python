@@ -84,11 +84,11 @@ class TestVisearch(unittest.TestCase):
 
         self.assertEqual(request_callback.request.method, 'POST')
         expected_images_count = len(self.inserted_images) * len(self.inserted_images[0])
-        images_count_in_querystring = len(request_callback.request.querystring)
-        self.assertEqual(images_count_in_querystring, expected_images_count)
+        images_count_in_query = len(request_callback.request.parsed_body)
+        self.assertEqual(images_count_in_query, expected_images_count)
 
         attr_names = set()
-        for item in request_callback.request.querystring.keys():
+        for item in request_callback.request.parsed_body.keys():
             attrname_index_list = re.findall(r'(\w+)\[(\d+)\]', item)
             self.assertEqual(len(attrname_index_list), 1)
             attr_name = attrname_index_list[0][0]
@@ -105,7 +105,7 @@ class TestVisearch(unittest.TestCase):
 
         resp = self.api.insert([])
 
-        self.assertEqual(request_callback.request.querystring, {})
+        self.assertEqual(request_callback.request.parsed_body, '')
         self.assertEqual(resp['error'][0]['error_code'], 104)
 
     @httpretty.activate
@@ -136,7 +136,7 @@ class TestVisearch(unittest.TestCase):
         image = self.inserted_images[0]
         self.api.insert(image)
 
-        self.assertEqual(len(request_callback.request.querystring), len(image))
+        self.assertEqual(len(request_callback.request.parsed_body), len(image))
 
     @httpretty.activate
     def test_insert_invlaidimagename(self):
@@ -162,7 +162,7 @@ class TestVisearch(unittest.TestCase):
 
         resp = self.api.remove([])
 
-        self.assertEqual(request_callback.request.querystring, {})
+        self.assertEqual(request_callback.request.parsed_body, '')
         self.assertEqual(resp['total'], 0)
 
     @httpretty.activate
@@ -175,7 +175,7 @@ class TestVisearch(unittest.TestCase):
 
         resp = self.api.remove([])
 
-        self.assertEqual(request_callback.request.querystring, {})
+        self.assertEqual(request_callback.request.parsed_body, '')
         self.assertEqual(resp['total'], 0)
 
     @httpretty.activate
@@ -189,8 +189,8 @@ class TestVisearch(unittest.TestCase):
         image_name = 'nonexistsimagename'
         resp = self.api.remove(image_name)
 
-        self.assertTrue('im_name[0]' in request_callback.request.querystring)
-        self.assertTrue(image_name == request_callback.request.querystring['im_name[0]'][0])
+        self.assertTrue('im_name[0]' in request_callback.request.parsed_body)
+        self.assertTrue(image_name == request_callback.request.parsed_body['im_name[0]'][0])
         self.assertEqual(resp['error'][0]['error_code'], 102)
 
     @httpretty.activate
@@ -205,7 +205,7 @@ class TestVisearch(unittest.TestCase):
         image_names = [self.inserted_images[0]['im_name'], ] + non_exists_imagenames
         resp = self.api.remove(image_names)
 
-        query_images = [query_image_name for query_image_val in request_callback.request.querystring.values() for query_image_name in query_image_val]
+        query_images = [query_image_name for query_image_val in request_callback.request.parsed_body.values() for query_image_name in query_image_val]
         self.assertEqual(set(image_names), set(query_images))
         for item in request_callback.request.querystring.keys():
             attrname_index_list = re.findall(r'(\w+)\[(\d+)\]', item)
