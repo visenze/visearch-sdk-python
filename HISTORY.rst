@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.2.2 (2015-06-08)
+++++++++++++++++++
+
+**Bugfixes**
+
+- Separate POST request data/parameters
+
 0.2.0 (2015-04-10)
 ++++++++++++++++++
 
