@@ -28,7 +28,7 @@ test_requirements = [
 
 setup(
     name='visearch',
-    version='0.2.2',
+    version='0.2.4',
     description="ViSearch Python SDK",
     long_description=readme + '\n\n' + history,
     author="Han Xiaogang",
@@ -50,7 +50,6 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
         "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
