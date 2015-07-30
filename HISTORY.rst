@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.2.6 (2015-07-30)
+++++++++++++++++++
+
+**Bugfixes**
+
+- update insert_status with extra parameters
+
 0.2.4 (2015-06-08)
 ++++++++++++++++++
 

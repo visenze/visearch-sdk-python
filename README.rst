@@ -184,6 +184,68 @@ the image will not be found in any search result.
 
 We recommend calling ``remove`` in batches of 100 images for optimized image indexing speed.
 
+4.5 Check Indexing Status
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The fetching and indexing process take time, and you may only search for
+images after their indexs are built. If you want to keep track of this
+process, you can call the ``insertStatus`` endpoint with the image's
+transaction identifier.
+
+
+.. code:: python
+
+    import time
+    import math
+
+    # the list of images to be indexed
+    # the unique identifier of the image 'im_name', the publicly downloadable url of the image 'im_url'
+    images = [
+        {'im_name': 'pic5', 'im_url': 'http://mydomain.com/images/vintage_wingtips.jpg'},
+    ]
+
+    response = api.insert(images)
+
+    trans_id = response['trans_id']
+
+    percent = 0
+    while (percent < 100):
+        time.sleep(1)
+
+        status_response = api.insert_status(trans_id)
+        if 'result' in status_response and len(status_response['result']) > 0:
+            percent = status_response['result'][0]['processed_percent']
+            print '{}% complete'.format(percent)
+
+    page_index = 1
+    error_per_page = 10
+    fail_count = None
+    status_response = api.insert_status(trans_id, page_index, error_per_page)
+    if 'result' in status_response and len(status_response['result']) > 0:
+        result_data = status_response['result'][0]
+        print result_data
+        fail_count = result_data['fail_count']
+        print 'Start time: {}'.format(result_data['start_time'])
+        print 'Update time: {}'.format(result_data['update_time'])
+        print "{} insertions with {} succeed and {} fail".format(
+            result_data['total'],
+            result_data['success_count'],
+            result_data['fail_count']
+            )
+
+    if fail_count > 0:
+        result_data = status_response['result'][0]
+        error_limit = result_data['error_limit']
+        total_page_number = int(math.ceil(float(fail_count) / error_limit))
+        for i in range(total_page_number):
+            page_index = i + 1
+            status_response = api.insert_status(trans_id, page_index, error_per_page)
+            error_list = status_response['result'][0]['error_list']
+            for error in error_list:
+                print "failure at page {} with error message {}".format(
+                    page_index,
+                    error)
+
 5. Searching Images
 -------------------
 
