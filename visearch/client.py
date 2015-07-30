@@ -41,11 +41,15 @@ class ViSearchAPI(object):
         resp = bind_method(self, path, method, data=data)
         return resp
 
-    def insert_status(self, trans_id):
+    def insert_status(self, trans_id, error_page=None, error_limit=None):
         path = 'insert/status/{trans_id}'
         path_parameters = {
             'trans_id': str(trans_id)
         }
+        if error_page:
+            path_parameters['error_page'] = error_page
+        if error_limit:
+            path_parameters['error_limit'] = error_limit
         path = build_path(path, path_parameters)
         resp = bind_method(self, path, 'GET')
         return resp
