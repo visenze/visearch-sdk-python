@@ -189,7 +189,7 @@ We recommend calling ``remove`` in batches of 100 images for optimized image ind
 
 The fetching and indexing process take time, and you may only search for
 images after their indexs are built. If you want to keep track of this
-process, you can call the ``insertStatus`` endpoint with the image's
+process, you can call the ``insert_status`` endpoint with the image's
 transaction identifier.
 
 
