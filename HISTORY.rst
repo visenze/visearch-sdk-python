@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.2.8 (2015-11-12)
+++++++++++++++++++
+
+**Improvement**
+
+- support arbitrary parameters in insert
+
 0.2.6 (2015-07-30)
 ++++++++++++++++++
 

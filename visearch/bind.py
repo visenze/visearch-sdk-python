@@ -61,9 +61,6 @@ def build_parameters(path, raw_parameters):
             for attr_name, attr_value in image.items():
                 param['%s[%d]' % (attr_name, ind)] = attr_value
 
-        if 'trans_id' in raw_parameters and raw_parameters['trans_id']:
-            param['trans_id'] = raw_parameters['trans_id']
-
     elif path == 'remove':
         param = dict([('im_name[{}]'.format(ind), image_name) for ind, image_name in enumerate(raw_parameters)])
 

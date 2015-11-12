@@ -24,20 +24,21 @@ class ViSearchAPI(object):
         raw_parameters = {
             'images': images,
         }
-        raw_parameters.update(kwargs)
         data = build_parameters(path, raw_parameters)
+        data.update(kwargs)
         resp = bind_method(self, path, method, data=data)
         return resp
 
-    def update(self, images):
-        self.insert(images)
+    def update(self, images, **kwargs):
+        self.insert(images, **kwargs)
 
-    def remove(self, image_names):
+    def remove(self, image_names, **kwargs):
         if type(image_names).__name__ != 'list':
             image_names = [image_names, ]
         path = 'remove'
         method = 'POST'
         data = build_parameters(path, image_names)
+        data.update(kwargs)
         resp = bind_method(self, path, method, data=data)
         return resp
 
