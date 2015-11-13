@@ -301,6 +301,13 @@ fl = ["price", "brand", "title", "im_url"]  #, or fl = ("price", "brand", "title
 response = api.uploadsearch(image_url=image_url, fl=fl)
 ```
 
+To retrieve all metadata of your image results, specify ```get_all_fl``` parameter and set it to ```True```:
+
+```python
+get_all_fl = True
+response = api.uploadsearch(image_url=image_url, get_all_fl=get_all_fl)
+```
+
  > Only metadata of type string, int, and float can be retrieved from ViSearch. Metadata of type text is not available for retrieval.
 
 ###7.2 Filtering Results

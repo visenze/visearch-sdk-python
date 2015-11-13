@@ -60,13 +60,14 @@ class ViSearchAPI(object):
         resp = bind_method(self, path, 'GET', parameters)
         return resp
 
-    def search(self, im_name, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0):
+    def search(self, im_name, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, get_all_fl=False):
         parameters = {
             'im_name': im_name,
             'page': page,
             'limit': limit,
             'score_max': score_max,
-            'score_min': score_min
+            'score_min': score_min,
+            'get_all_fl': get_all_fl
         }
         if fl:
             parameters.update({'fl': fl})
@@ -78,7 +79,7 @@ class ViSearchAPI(object):
         path = 'search'
         return self._search(path, parameters)
 
-    def colorsearch(self, color, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0):
+    def colorsearch(self, color, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, get_all_fl=False):
         # _rgbstr = re.compile(r'^(?:[0-9a-fA-F]{3}){1,2}$')
         if color.startswith('#'):
             color = color[1:]
@@ -89,7 +90,8 @@ class ViSearchAPI(object):
             'page': page,
             'limit': limit,
             'score_max': score_max,
-            'score_min': score_min
+            'score_min': score_min,
+            'get_all_fl': get_all_fl
         }
         if fl:
             parameters.update({'fl': fl})
@@ -123,12 +125,13 @@ class ViSearchAPI(object):
         files = {'image': fp}
         return files
 
-    def uploadsearch(self, image_path=None, image_url=None, box=None, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, resize='STANDARD'):
+    def uploadsearch(self, image_path=None, image_url=None, box=None, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, resize='STANDARD', get_all_fl=False):
         parameters = {
             'page': page,
             'limit': limit,
             'score_max': score_max,
-            'score_min': score_min
+            'score_min': score_min,
+            'get_all_fl': get_all_fl
         }
         if fl:
             parameters.update({'fl': fl})
