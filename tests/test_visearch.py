@@ -355,6 +355,20 @@ class TestVisearch(unittest.TestCase):
         self.assertEqual(resp['status'], 'OK')
 
     @httpretty.activate
+    def test_urluploadsearch_get_all_fl(self):
+        global active_mock_response
+
+        active_mock_response = 200, '{"status": "OK", "method": "uploadsearch", "limit": 30, "result": [{"im_name": "147562129", "value_map": {"detect": "top", "group_id": "175066446", "im_url": "http://ak2.polyvoreimg.com/cgi/img-thing/size/y/tid/147562129.jpg", "key_word": ""}}], "error": [], "total": 1, "page": 1}'
+
+        httpretty.register_uri(httpretty.GET, self.uploadsearch_entpoint, body=request_callback)
+
+        image_url = 'http://gw3.alicdn.com/bao/uploaded/i4/TB12.BQHXXXXXX_XpXXXXXXXXXX_!!0-item_pic.jpg'
+        resp = self.api.uploadsearch(image_url=image_url, get_all_fl=True)
+        self.assertEqual(request_callback.request.method, 'GET')
+        self.assertEqual('key_word' in resp['result'][0]['value_map'], True)
+        self.assertEqual(resp['status'], 'OK')
+
+    @httpretty.activate
     def test_urluploadsearch_urlnotvalid(self):
         global active_mock_response
 

@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.3.0 (2015-11-13)
+++++++++++++++++++
+
+**Improvement**
+
+- Add get_all_fl field so that user can query for all metafields
+
 0.2.8 (2015-11-12)
 ++++++++++++++++++
 
