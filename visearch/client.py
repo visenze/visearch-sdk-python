@@ -55,12 +55,12 @@ class ViSearchAPI(object):
         resp = bind_method(self, path, 'GET')
         return resp
 
-    def _search(self, path, parameters):
-        parameters = build_parameters(path, parameters)
+    def _search(self, path, parameters, **kwargs):
+        parameters = build_parameters(path, parameters, **kwargs)
         resp = bind_method(self, path, 'GET', parameters)
         return resp
 
-    def search(self, im_name, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, get_all_fl=False):
+    def search(self, im_name, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, get_all_fl=False, **kwargs):
         parameters = {
             'im_name': im_name,
             'page': page,
@@ -77,9 +77,9 @@ class ViSearchAPI(object):
             parameters.update({'score': score})
 
         path = 'search'
-        return self._search(path, parameters)
+        return self._search(path, parameters, **kwargs)
 
-    def colorsearch(self, color, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, get_all_fl=False):
+    def colorsearch(self, color, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, get_all_fl=False, **kwargs):
         # _rgbstr = re.compile(r'^(?:[0-9a-fA-F]{3}){1,2}$')
         if color.startswith('#'):
             color = color[1:]
@@ -101,7 +101,7 @@ class ViSearchAPI(object):
             parameters.update({'score': score})
 
         path = 'colorsearch'
-        return self._search(path, parameters)
+        return self._search(path, parameters, **kwargs)
 
     def _read_image(self, image_path, resize_settings):
         if resize_settings == 'STANDARD':
@@ -125,7 +125,7 @@ class ViSearchAPI(object):
         files = {'image': fp}
         return files
 
-    def uploadsearch(self, image_path=None, image_url=None, box=None, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, resize='STANDARD', get_all_fl=False):
+    def uploadsearch(self, image_path=None, image_url=None, box=None, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, resize='STANDARD', get_all_fl=False, **kwargs):
         parameters = {
             'page': page,
             'limit': limit,
@@ -151,8 +151,8 @@ class ViSearchAPI(object):
             raise ViSearchClientError("either provide image_path or image_url")
         elif image_url:
             parameters.update({'im_url': image_url})
-            return self._search(path, parameters)
+            return self._search(path, parameters, **kwargs)
         else:
             files = self._read_image(image_path, resize)
-            parameters = build_parameters(path, parameters)
+            parameters = build_parameters(path, parameters, **kwargs)
             return bind_method(self, path, 'POST', parameters, files=files)

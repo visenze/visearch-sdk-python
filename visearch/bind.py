@@ -44,7 +44,7 @@ def build_path(path, parameters):
     return path
 
 
-def build_parameters(path, raw_parameters):
+def build_parameters(path, raw_parameters, **kwargs):
     if path == 'insert':
         required_fields = ['im_name', 'im_url']
 
@@ -75,6 +75,8 @@ def build_parameters(path, raw_parameters):
                 if type(attr_value) == dict:
                     parameter_item = '&'.join(['fq={0}:{1}'.format(fq_attr, fq_val) for fq_attr, fq_val in attr_value.items()])
             parameter_list.append(parameter_item)
+
+        parameter_list += ['{}={}'.format(key, value) for key, value in kwargs.iteritems()]
         param = '&'.join(parameter_list)
 
     return param

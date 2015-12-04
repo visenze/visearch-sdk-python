@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.3.2 (2015-12-04)
+++++++++++++++++++
+
+**Improvement**
+
+- support arbitrary parameters in search
+
 0.3.0 (2015-11-13)
 ++++++++++++++++++
 
