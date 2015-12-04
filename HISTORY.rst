@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.3.3 (2015-12-04)
+++++++++++++++++++
+
+**Bug fix**
+
+- fix dict iteritem issue for python 3
+
 0.3.2 (2015-12-04)
 ++++++++++++++++++
 
