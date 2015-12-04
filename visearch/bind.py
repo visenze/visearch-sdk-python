@@ -76,7 +76,7 @@ def build_parameters(path, raw_parameters, **kwargs):
                     parameter_item = '&'.join(['fq={0}:{1}'.format(fq_attr, fq_val) for fq_attr, fq_val in attr_value.items()])
             parameter_list.append(parameter_item)
 
-        parameter_list += ['{}={}'.format(key, value) for key, value in kwargs.iteritems()]
+        parameter_list += ['{}={}'.format(key, value) for key, value in kwargs.items()]
         param = '&'.join(parameter_list)
 
     return param
