@@ -126,7 +126,7 @@ class ViSearchAPI(object):
         files = {'image': fp}
         return files
 
-    def uploadsearch(self, image_path=None, image_url=None, box=None, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, resize='STANDARD', get_all_fl=False, **kwargs):
+    def uploadsearch(self, image_path=None, image_url=None, box=None, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, resize=None, get_all_fl=False, **kwargs):
         parameters = {
             'page': page,
             'limit': limit,
@@ -154,6 +154,9 @@ class ViSearchAPI(object):
             parameters.update({'im_url': quote(image_url)})
             return self._search(path, parameters, **kwargs)
         else:
-            files = self._read_image(image_path, resize)
+            if resize:
+                files = self._read_image(image_path, resize)
+            else:
+                files = {'image': open(image_path, 'rb')}
             parameters = build_parameters(path, parameters, **kwargs)
             return bind_method(self, path, 'POST', parameters, files=files)

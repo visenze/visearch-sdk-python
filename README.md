@@ -251,7 +251,9 @@ response = api.uploadsearch(image_url=image_url, box=box)
 
 When performing upload search, you might experience increasing search latency with increasing image file sizes. This is due to the increased time transferring your images to the ViSearch server, and the increased time for processing larger image files in ViSearch.
 
-To reduce upload search latency, by default the ```uploadSearch``` method makes a copy of your image file if both of the image dimensions exceed 512 pixels, and resizes the copy to dimensions not exceeding 512x512 pixels. This is the optimized size to lower search latency while not sacrificing search accuracy for general use cases:
+By default, the `uploadsearch` api will upload the raw image. But to reduce upload search latency, the `uploadsearch` api supports dimension reduction, which is specified using the `resize` parameter
+
+If your image dimensions exceed 512 pixels, the STANDARD resize settings will resize the copy to dimensions not exceeding 512x512 pixels. This is the optimized size to lower search latency while not sacrificing search accuracy for general use cases:
 ```python
 # client.uploadSearch(params) is equivalent to using STANDARD resize settings, 512x512 and jpeg 75 quality
 image_path = 'blue_dress.jpg'

@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.3.6 (2015-12-24)
+++++++++++++++++++
+
+**Improvement**
+
+- send raw image in uploadsearch to make consistent results as in dashboard
+
 0.3.5 (2015-12-24)
 ++++++++++++++++++
 
