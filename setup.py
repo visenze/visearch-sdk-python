@@ -23,12 +23,12 @@ requirements = [
 
 test_requirements = [
     # TODO: put package test requirements here
-    'httpretty'
+    'httpretty==0.8.10'
 ]
 
 setup(
     name='visearch',
-    version='0.3.4',
+    version='0.3.5',
     description="ViSearch Python SDK",
     long_description=readme + '\n\n' + history,
     author="Han Xiaogang",

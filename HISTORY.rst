@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.3.5 (2015-12-24)
+++++++++++++++++++
+
+**Bug fix**
+
+- fix tests due to httpretty incompatibility for python 3
+
 0.3.4 (2015-12-24)
 ++++++++++++++++++
 

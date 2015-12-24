@@ -6,6 +6,7 @@ import json
 import re
 import sys
 import os.path
+from six.moves.urllib.parse import unquote
 from visearch import client
 from visearch.bind import ViSearchAPIError, ViSearchClientError
 
@@ -72,6 +73,11 @@ class TestVisearch(unittest.TestCase):
 
         self.assertEqual(resp['error'], ['Invalid access key or secret key.'])
 
+    def _build_parsed_body(self, body):
+        parsed_body = unquote(body.decode('utf-8')).split('&')
+        parsed_body = dict([(item.split('=')[0], [item.split('=')[1]]) for item in parsed_body])
+        return parsed_body
+
     @httpretty.activate
     def test_insert_requestparams(self):
         global active_mock_response
@@ -84,6 +90,9 @@ class TestVisearch(unittest.TestCase):
 
         self.assertEqual(request_callback.request.method, 'POST')
         expected_images_count = len(self.inserted_images) * len(self.inserted_images[0])
+
+        request_callback.request.parsed_body = self._build_parsed_body(request_callback.request.body)
+
         images_count_in_query = len(request_callback.request.parsed_body)
         self.assertEqual(images_count_in_query, expected_images_count)
 
@@ -135,6 +144,8 @@ class TestVisearch(unittest.TestCase):
 
         image = self.inserted_images[0]
         self.api.insert(image)
+
+        request_callback.request.parsed_body = self._build_parsed_body(request_callback.request.body)
 
         self.assertEqual(len(request_callback.request.parsed_body), len(image))
 
@@ -189,6 +200,8 @@ class TestVisearch(unittest.TestCase):
         image_name = 'nonexistsimagename'
         resp = self.api.remove(image_name)
 
+        request_callback.request.parsed_body = self._build_parsed_body(request_callback.request.body)
+
         self.assertTrue('im_name[0]' in request_callback.request.parsed_body)
         self.assertTrue(image_name == request_callback.request.parsed_body['im_name[0]'][0])
         self.assertEqual(resp['error'][0]['error_code'], 102)
@@ -205,7 +218,10 @@ class TestVisearch(unittest.TestCase):
         image_names = [self.inserted_images[0]['im_name'], ] + non_exists_imagenames
         resp = self.api.remove(image_names)
 
+        request_callback.request.parsed_body = self._build_parsed_body(request_callback.request.body)
+
         query_images = [query_image_name for query_image_val in request_callback.request.parsed_body.values() for query_image_name in query_image_val]
+
         self.assertEqual(set(image_names), set(query_images))
         for item in request_callback.request.querystring.keys():
             attrname_index_list = re.findall(r'(\w+)\[(\d+)\]', item)
