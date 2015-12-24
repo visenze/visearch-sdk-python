@@ -4,6 +4,7 @@ except ImportError:
     from io import BytesIO as StringIO
 from PIL import Image
 from requests.auth import HTTPBasicAuth
+from six.moves.urllib.parse import quote
 from .bind import bind_method, build_parameters, build_path
 from .bind import ViSearchClientError
 
@@ -150,7 +151,7 @@ class ViSearchAPI(object):
         if not (image_path or image_url):
             raise ViSearchClientError("either provide image_path or image_url")
         elif image_url:
-            parameters.update({'im_url': image_url})
+            parameters.update({'im_url': quote(image_url)})
             return self._search(path, parameters, **kwargs)
         else:
             files = self._read_image(image_path, resize)

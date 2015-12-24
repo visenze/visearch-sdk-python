@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.3.4 (2015-12-24)
+++++++++++++++++++
+
+**Bug fix**
+
+- encode url parameter in uploadsearch
+
 0.3.3 (2015-12-04)
 ++++++++++++++++++
 
