@@ -42,6 +42,12 @@ To install visearch, simply:
 $ pip install visearch
 ```
 
+To upgrade visearch to latest version, simply:
+
+```
+$ pip install -U visearch
+```
+
 ##3. Initialization
 To start using ViSearch API, initialize ViSearch client with your ViSearch API credentials. Your credentials can be found in [ViSearch Dashboard](https://dashboard.visenze.com):
 
