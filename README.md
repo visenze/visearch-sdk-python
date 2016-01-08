@@ -24,7 +24,7 @@
       - 7.1 [Retrieving Metadata](#71-retrieving-metadata)
       - 7.2 [Filtering Results](#72-filtering-results)
       - 7.3 [Result Score](#73-result-score)
-      - 7.4 [Automatic Object Recognition Beta](#74-object-recognition)
+      - 7.4 [Automatic Object Recognition Beta](#74-automatic-object-recognition-beta)
  8. [Declaration](#8-declaration)
 
 ----
