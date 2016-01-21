@@ -24,6 +24,7 @@
       - 7.1 [Retrieving Metadata](#71-retrieving-metadata)
       - 7.2 [Filtering Results](#72-filtering-results)
       - 7.3 [Result Score](#73-result-score)
+      - 7.4 [Automatic Object Recognition Beta](#74-automatic-object-recognition-beta)
  8. [Declaration](#8-declaration)
 
 ----
@@ -357,6 +358,29 @@ score_min = 0.5
 score_max = 0.8
 response = api.uploadsearch(image_url=image_url, score_max=score_max, score_min=score_min)
 ```
+
+###7.4 Automatic Object Recognition Beta
+With Automatic Object Recognition, ViSearch /uploadsearch API is smart to detect the objects present in the query image and suggest the best matched product type to run the search on. 
+
+You can turn on the feature in upload search by setting the API parameter "detection=all". We are now able to detect various types of fashion items, including `Top`, `Dress`, `Bottom`, `Shoe`, `Bag`, `Watch` and `Indian Ethnic Wear`. The list is ever-expanding as we explore this feature for other categories. 
+
+Notice: This feature is currently available for fashion application type only. You will need to make sure your app type is configurated as "fashion" on [ViSenze dashboard](https://developers.visenze.com/setup/#Choose-Your-Application-Type). 
+
+```python
+param = {'detection': 'all'}
+response = api.uploadsearch(image_url=image_url, **param)
+```
+
+You could also recognize objects from a paticular type on the uploaded query image through configuring the detection parameter to a specific product type as "detection={type}". Our API will run the search within that product type.
+
+Sample request to detect `bag` in an uploaded image:
+
+```python
+param = {'detection': 'bag'}
+response = api.uploadsearch(image_url=image_url, **param)
+```
+
+The detected product types are listed in `product_types` together with the match score and box area of the detected object. Multiple objects can be detected from the query image and they are ranked from the highest score to lowest. The full list of supported product types by our API will also be returned in `product_types_list`. 
 
 ##8. Declaration
 * The image upload.jpg included in the SDK is downloaded from http://pixabay.com/en/boots-shoes-pants-folded-fashion-690502/
