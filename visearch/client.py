@@ -1,3 +1,4 @@
+import os
 try:
     from StringIO import StringIO
 except ImportError:
@@ -157,6 +158,7 @@ class ViSearchAPI(object):
             if resize:
                 files = self._read_image(image_path, resize)
             else:
-                files = {'image': open(image_path, 'rb')}
+                filename = os.path.basename(image_path)
+                files = {'image': (filename, open(image_path, 'rb'), 'application/octet-stream')}
             parameters = build_parameters(path, parameters, **kwargs)
             return bind_method(self, path, 'POST', parameters, files=files)
