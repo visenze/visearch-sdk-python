@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.3.7 (2016-01-21)
+++++++++++++++++++
+
+**Improvement**
+
+- add missing info in multipart upload
+
 0.3.6 (2015-12-24)
 ++++++++++++++++++
 
