@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.3.8 (2016-04-20)
+++++++++++++++++++
+
+**Improvement**
+
+- exclude im_url from the required fields in update
+
 0.3.7 (2016-01-21)
 ++++++++++++++++++
 

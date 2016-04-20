@@ -44,10 +44,8 @@ def build_path(path, parameters):
     return path
 
 
-def build_parameters(path, raw_parameters, **kwargs):
+def build_parameters(path, raw_parameters, required_fields=None, **kwargs):
     if path == 'insert':
-        required_fields = ['im_name', 'im_url']
-
         images = raw_parameters['images']
 
         for ind, image in enumerate(images):
