@@ -11,8 +11,9 @@ from .bind import ViSearchClientError
 
 
 class ViSearchAPI(object):
-    def __init__(self, access_key, secret_key):
-        self.host = "http://visearch.visenze.com/"
+    def __init__(self, access_key, secret_key,host="http://visearch.visenze.com/"):
+        #self.host = "http://visearch.visenze.com/"
+        self.host = host
         self.access_key = access_key
         self.secret_key = secret_key
         self.auth_info = HTTPBasicAuth(self.access_key, self.secret_key)
