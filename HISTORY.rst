@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.3.9 (2016-07-20)
+++++++++++++++++++
+
+**Improvement**
+
+- allow passing search endpoint as parameter
+
 0.3.8 (2016-04-20)
 ++++++++++++++++++
 
