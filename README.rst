@@ -246,7 +246,7 @@ transaction identifier.
                     page_index,
                     error)
 
-5. Searching Images
+5. Solutions
 -------------------
 
 5.1 Find Similar
@@ -342,7 +342,7 @@ Or provide customized resize settings:
     response = api.uploadsearch(image_path=image_path, resize=(800, 800, 80))
 
 
-5.4 Color Search
+5.4 Search by Color
 ~~~~~~~~~~~~~~~~
 
 **Search by color** solution is to search images with similar color by

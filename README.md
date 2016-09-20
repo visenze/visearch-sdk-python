@@ -13,12 +13,13 @@
       - 4.3 [Updating Images](#43-updating-images)
       - 4.4 [Removing Images](#44-removing-images)
       - 4.5 [Check Indexing Status](#44-check-indexing-status)
- 5. [Searching Images](#5-searching-images)
-      - 5.1 [Pre-indexed Search](#51-pre-indexed-search)
-      - 5.2 [Color Search](#52-color-search)
-      - 5.3 [Upload Search](#53-upload-search)
+ 5. [Solutions](#5-searching-images)
+      - 5.1 [Find Similar](#51-find-similar)
+      - 5.2 [You May Also Like](#52-you-may-also-like)
+      - 5.3 [Search by Image](#53-search-by-image)
         - 5.3.1 [Selection Box](#531-selection-box)
         - 5.3.2 [Resizing Settings](#532-resizing-settings)
+      - 5.4 [Search by Color](#54-search-by-color)
  6. [Search Results](#6-search-results)
  7. [Advanced Search Parameters](#7-advanced-search-parameters)
       - 7.1 [Retrieving Metadata](#71-retrieving-metadata)
@@ -211,7 +212,7 @@ if fail_count > 0:
 ```
 
 
-##5. Searching Images
+##5. Solutions
 
 ###5.1 Find Similar
 **Find similar** solution is to search for visually similar images in the image database giving an indexed image’s unique identifier (im_name).
