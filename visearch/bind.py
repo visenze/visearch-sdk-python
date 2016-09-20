@@ -82,9 +82,20 @@ def build_parameters(path, raw_parameters, required_fields=None, **kwargs):
 
 def bind_method(api, path, method, parameters=None, data=None, files=None):
     if method.upper() == 'POST':
-        resp = requests.post(api.host + path, params=parameters, data=data, files=files, auth=api.auth_info, timeout=10*60)
+        resp = requests.post(
+            api.host + path,
+            params=parameters,
+            data=data,
+            files=files,
+            auth=api.auth_info,
+            timeout=10 * 60)
     elif method.upper() == 'GET':
-        resp = requests.get(api.host + path, params=parameters, files=files, auth=api.auth_info, timeout=10*60)
+        resp = requests.get(
+            api.host + path,
+            params=parameters,
+            files=files,
+            auth=api.auth_info,
+            timeout=10 * 60)
     else:
         raise ViSearchClientError('unsupported http method')
 

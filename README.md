@@ -213,31 +213,32 @@ if fail_count > 0:
 
 ##5. Searching Images
 
-###5.1 Pre-indexed Search
-Pre-index search is to search similar images based on the your indexed image by its unique identifier (im_name). It  should be a valid ID that is used to index your images in the database.
+###5.1 Find Similar
+**Find similar** solution is to search for visually similar images in the image database giving an indexed image’s unique identifier (im_name).
 
 ```python
 response = api.search("blue_dress")
 ```
 
-###5.2 Color Search
-Color search is to search images with similar color by providing a color code. The color code should be in Hexadecimal and passed to the colorsearch service.
+###5.2 You May Also Like
+**You may also like** solution is to provide a list of recommended items from the indexed image database based on customizable rules giving an indexed image’s unique identifier (im_name).
+
 
 ```python
-response = api.colorsearch("fa4d4d")
+response = api.recommendation("blue_dress")
 ```
 
-###5.3 Upload Search
-Upload search is used to search similar images by uploading an image or providing an image url. `Image` class is used to perform the image encoding and resizing. You should construct the `Image` object and pass it to uploadsearch to start a search.
+###5.3 Search by Image
+**Search by image** solution is to search similar images by uploading an image or providing an image url.
 
-Using an image from a local file path
+* Using an image from a local file path:
 
 ```python
 image_path = 'blue_dress.jpg'
 response = api.uploadsearch(image_path=image_path)
 ```
 
-Alternatively, you can pass an image url directly to uploadsearch to start the search.
+* Using image url:
 
 ```python
 image_url = 'http://mydomain.com/images/red_dress.jpg'
@@ -280,6 +281,16 @@ Or provide customized resize settings:
 image_path = 'blue_dress.jpg'
 response = api.uploadsearch(image_path=image_path, resize=(800, 800, 80))
 ```
+
+
+###5.4 Search by Color
+**Search by color** solution is to search images with similar color by providing a color code. The color code should be in Hexadecimal and passed to the colorsearch service.
+
+```python
+response = api.colorsearch("fa4d4d")
+```
+
+
 
 ##6. Search Results
 

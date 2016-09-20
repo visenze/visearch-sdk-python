@@ -11,8 +11,8 @@ from .bind import ViSearchClientError
 
 
 class ViSearchAPI(object):
-    def __init__(self, access_key, secret_key,host="http://visearch.visenze.com/"):
-        #self.host = "http://visearch.visenze.com/"
+    def __init__(self, access_key, secret_key, host="http://visearch.visenze.com/"):
+        # self.host = "http://visearch.visenze.com/"
         self.host = host
         self.access_key = access_key
         self.secret_key = secret_key
@@ -94,6 +94,27 @@ class ViSearchAPI(object):
 
         path = 'search'
         return self._search(path, parameters, **kwargs)
+
+    def recommendation(self, im_name, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, get_all_fl=False, **kwargs):
+        parameters = {
+            'im_name': im_name,
+            'page': page,
+            'limit': limit,
+            'score_max': score_max,
+            'score_min': score_min,
+            'get_all_fl': get_all_fl
+        }
+        if fl:
+            parameters.update({'fl': fl})
+        if fq:
+            parameters.update({'fq': fq})
+        if score:
+            parameters.update({'score': score})
+
+        path = 'recommendation'
+        parameters = build_parameters(path, parameters, **kwargs)
+        resp = bind_method(self, path, 'GET', parameters)
+        return resp
 
     def colorsearch(self, color, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, get_all_fl=False, **kwargs):
         # _rgbstr = re.compile(r'^(?:[0-9a-fA-F]{3}){1,2}$')
