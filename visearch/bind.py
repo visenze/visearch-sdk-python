@@ -62,7 +62,7 @@ def build_parameters(path, raw_parameters, required_fields=None, **kwargs):
     elif path == 'remove':
         param = dict([('im_name[{}]'.format(ind), image_name) for ind, image_name in enumerate(raw_parameters)])
 
-    elif path in ['search', 'colorsearch', 'uploadsearch']:
+    elif path in ['search', 'colorsearch', 'uploadsearch','recommendation']:
         parameter_list = []
         for attr_name, attr_value in raw_parameters.items():
             parameter_item = '{0}={1}'.format(attr_name, attr_value)

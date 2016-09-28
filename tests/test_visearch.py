@@ -41,6 +41,7 @@ class TestVisearch(unittest.TestCase):
         self.remove_entpoint = "http://visearch.visenze.com/remove"
         self.insert_status_rootendpoint = "http://visearch.visenze.com/insert/status/"
         self.idsearch_entpoint = "http://visearch.visenze.com/search"
+        self.recommendation_entpoint = "http://visearch.visenze.com/recommendation"
         self.colorsearch_entpoint = "http://visearch.visenze.com/colorsearch"
         self.uploadsearch_entpoint = "http://visearch.visenze.com/uploadsearch"
 
@@ -268,6 +269,20 @@ class TestVisearch(unittest.TestCase):
 
         im_name = '39012157235'
         resp = self.api.search(im_name)
+        self.assertTrue('im_name' in request_callback.request.querystring.keys())
+        self.assertEqual(im_name, request_callback.request.querystring['im_name'][0])
+        self.assertEqual(resp['status'], 'OK')
+
+    @httpretty.activate
+    def test_recommendation_valid_im_name(self):
+        global active_mock_response
+
+        active_mock_response = 200, '{"status": "OK", "method": "search", "limit": 30, "result": [{"im_name": "39882808162"}, {"im_name": "19609426340"}, {"im_name": "40623053246"}, {"im_name": "25301792601"}, {"im_name": "19356394967"}, {"im_name": "38213377507"}, {"im_name": "38475333633"}, {"im_name": "41229714662"}, {"im_name": "42894441677"}], "error": [], "total": 9, "page": 1}'
+
+        httpretty.register_uri(httpretty.GET, self.recommendation_entpoint, body=request_callback)
+
+        im_name = '39012157235'
+        resp = self.api.recommendation(im_name)
         self.assertTrue('im_name' in request_callback.request.querystring.keys())
         self.assertEqual(im_name, request_callback.request.querystring['im_name'][0])
         self.assertEqual(resp['status'], 'OK')
