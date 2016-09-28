@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.4.1 (2016-09-28)
+++++++++++++++++++
+
+**Improvement**
+
+- fix the issue for recommendation endpoint and add a test cases
+
 0.4.0 (2016-09-20)
 ++++++++++++++++++
 
