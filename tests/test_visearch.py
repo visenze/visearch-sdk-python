@@ -63,6 +63,18 @@ class TestVisearch(unittest.TestCase):
         self.assertEqual(request_callback.request.headers['authorization'], expected_auth_str)
 
     @httpretty.activate
+    def test_headers(self):
+        global active_mock_response
+
+        active_mock_response = (200, '{"status": "OK", "total": 10, "method": "insert", "trans_id": 352649805417295872}')
+
+        httpretty.register_uri(httpretty.POST, self.insert_entpoint, body=request_callback)
+
+        self.api.insert(self.inserted_images)
+        self.assertTrue('x-requested-with' in request_callback.request.headers)
+        self.assertTrue(request_callback.request.headers['x-requested-with'].startswith('ViSenze-Python-SDK'))
+
+    @httpretty.activate
     def test_auth_invalid(self):
         global active_mock_response
 
@@ -132,7 +144,7 @@ class TestVisearch(unittest.TestCase):
                 insert_images.append({
                     'im_name': image['im_name'] + str(i),
                     'im_url': image['im_url']
-                    })
+                })
         self.assertRaises(ViSearchAPIError, self.api.insert, insert_images)
 
     @httpretty.activate
@@ -236,7 +248,7 @@ class TestVisearch(unittest.TestCase):
         active_mock_response = 200, '{"status": "fail", "method": "insert/status", "error": [{"error_message": "Transaction not found with trans_id.", "error_code": 101}]}'
 
         invalid_trans_id = '123'
-        httpretty.register_uri(httpretty.GET, self.insert_status_rootendpoint+invalid_trans_id, body=request_callback)
+        httpretty.register_uri(httpretty.GET, self.insert_status_rootendpoint + invalid_trans_id, body=request_callback)
 
         resp = self.api.insert_status(invalid_trans_id)
 
@@ -251,7 +263,7 @@ class TestVisearch(unittest.TestCase):
         active_mock_response = 200, '{"status": "OK", "method": "insert/status", "result": [{"update_time": "2015-04-07T10:02:51.048+0000", "start_time": "2015-04-07T10:02:51.048+0000", "processed_percent": 100, "fail_count": 0, "success_count": 10, "total": 10, "trans_id": 352649805417295872}]}'
 
         invalid_trans_id = '352649805417295872'
-        httpretty.register_uri(httpretty.GET, self.insert_status_rootendpoint+invalid_trans_id, body=request_callback)
+        httpretty.register_uri(httpretty.GET, self.insert_status_rootendpoint + invalid_trans_id, body=request_callback)
 
         resp = self.api.insert_status(invalid_trans_id)
 
@@ -570,6 +582,7 @@ class TestVisearch(unittest.TestCase):
         self.assertEqual(request_callback.request.querystring['score_min'][0], str(score_min))
         self.assertEqual(request_callback.request.querystring['score_max'][0], str(score_max))
         self.assertEqual(resp['error'][0], "score_max must be no more than 1")
+
 
 if __name__ == '__main__':
     unittest.main()

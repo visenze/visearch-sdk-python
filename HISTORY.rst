@@ -3,6 +3,13 @@
 Release History
 ---------------
 
+0.4.2 (2016-11-08)
+++++++++++++++++++
+
+**Improvement**
+
+- add "X-Requested-With" in the request header when calling api
+
 0.4.1 (2016-09-28)
 ++++++++++++++++++
 

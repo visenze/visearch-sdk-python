@@ -1,6 +1,7 @@
 import requests
 import re
 from six.moves.urllib.parse import quote
+from __init__ import __version__
 
 
 re_path_template = re.compile('{\w+}')
@@ -62,7 +63,7 @@ def build_parameters(path, raw_parameters, required_fields=None, **kwargs):
     elif path == 'remove':
         param = dict([('im_name[{}]'.format(ind), image_name) for ind, image_name in enumerate(raw_parameters)])
 
-    elif path in ['search', 'colorsearch', 'uploadsearch','recommendation']:
+    elif path in ['search', 'colorsearch', 'uploadsearch', 'recommendation']:
         parameter_list = []
         for attr_name, attr_value in raw_parameters.items():
             parameter_item = '{0}={1}'.format(attr_name, attr_value)
@@ -81,6 +82,8 @@ def build_parameters(path, raw_parameters, required_fields=None, **kwargs):
 
 
 def bind_method(api, path, method, parameters=None, data=None, files=None):
+    headers = {'X-Requested-With': 'ViSenze-Python-SDK/{}'.format(__version__)}
+
     if method.upper() == 'POST':
         resp = requests.post(
             api.host + path,
@@ -88,14 +91,16 @@ def bind_method(api, path, method, parameters=None, data=None, files=None):
             data=data,
             files=files,
             auth=api.auth_info,
-            timeout=10 * 60)
+            timeout=10 * 60,
+            headers=headers)
     elif method.upper() == 'GET':
         resp = requests.get(
             api.host + path,
             params=parameters,
             files=files,
             auth=api.auth_info,
-            timeout=10 * 60)
+            timeout=10 * 60,
+            headers=headers)
     else:
         raise ViSearchClientError('unsupported http method')
 
