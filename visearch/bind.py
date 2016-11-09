@@ -1,7 +1,7 @@
 import requests
 import re
 from six.moves.urllib.parse import quote
-from __init__ import __version__
+from . import __version__
 
 
 re_path_template = re.compile('{\w+}')
