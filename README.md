@@ -1,9 +1,9 @@
-#ViSearch Python SDK
+# ViSearch Python SDK
 
 [<img src="https://travis-ci.org/visenze/visearch-sdk-python.svg">](https://travis-ci.org/visenze/visearch-sdk-python) [<img src="https://img.shields.io/pypi/v/visearch.svg">](https://pypi.python.org/pypi/visearch)
 
 ----
-##Table of Contents
+## Table of Contents
  1. [Overview](#1-overview)
  2. [Setup](#2-setup)
  3. [Initialization](#3-initialization)
@@ -13,13 +13,12 @@
       - 4.3 [Updating Images](#43-updating-images)
       - 4.4 [Removing Images](#44-removing-images)
       - 4.5 [Check Indexing Status](#44-check-indexing-status)
- 5. [Solutions](#5-searching-images)
-      - 5.1 [Find Similar](#51-find-similar)
-      - 5.2 [You May Also Like](#52-you-may-also-like)
-      - 5.3 [Search by Image](#53-search-by-image)
-        - 5.3.1 [Selection Box](#531-selection-box)
-        - 5.3.2 [Resizing Settings](#532-resizing-settings)
-      - 5.4 [Search by Color](#54-search-by-color)
+ 5. [Solution APIs](#5-solution-apis)
+      - 5.1 [Visually Similar Recommendations](#51-visually-similar-recommendations)
+      - 5.2 [Search by Image](#52-search-by-image)
+        - 5.2.1 [Selection Box](#521-selection-box)
+        - 5.2.2 [Resizing Settings](#522-resizing-settings)
+      - 5.3 [Search by Color](#53-search-by-color)
  6. [Search Results](#6-search-results)
  7. [Advanced Search Parameters](#7-advanced-search-parameters)
       - 7.1 [Retrieving Metadata](#71-retrieving-metadata)
@@ -30,14 +29,14 @@
 
 ----
 
-##1. Overview
+## 1. Overview
 ViSearch is an API that provides accurate, reliable and scalable image search. ViSearch API provides endpoints that let developers index their images and perform image searches efficiently. ViSearch API can be easily integrated into your web and mobile applications. More details about ViSearch API can be found in the [documentation](http://www.visenze.com/docs/overview/introduction).
 
 The ViSearch Python SDK is an open source software for easy integration of ViSearch Search API with your application server. It provides three search methods based on the ViSearch Search API - pre-indexed search, color search and upload search. The ViSearch Python SDK also provides an easy integration of the ViSearch Data API which includes data inserting and data removing. For source code and references, visit the github [repository](https://github.com/visenze/visearch-sdk-python).
 
 * Supported on Python 2.7+ and 3.3+
  
-##2. Setup
+## 2. Setup
 To install visearch, simply:
 
 ```
@@ -62,10 +61,10 @@ secret_key = 'your app secret key'
 api = client.ViSearchAPI(access_key, secret_key)
 ```
 
-##4. Indexing Images
+## 4. Indexing Images
 
 
-###4.1 Indexing Your First Images
+### 4.1 Indexing Your First Images
 
 Built for scalability, ViSearch API enables fast and accurate searches on high volume of images. Before making your first image search, you need to prepare a list of images and index them into ViSearch by calling the /insert endpoint. Each image must have a unique identifier and a publicly downloadable URL. ViSearch will parallelly fetch your images from the given URLs, and index the downloaded for searching. After the image indexes are built, you can start searching for [similar images using the unique identifier](https://github.com/visenze/visearch-sdk-python/blob/master/README_md.md#51-pre-indexed-search), [using a color](https://github.com/visenze/visearch-sdk-python/blob/master/README_md.md#52-color-search), or [using another image](https://github.com/visenze/visearch-sdk-python/blob/master/README_md.md#53-upload-search).
 
@@ -84,7 +83,7 @@ response = api.insert(images)
 
  > Each ```insert``` call to ViSearch accepts a maximum of 100 images. We recommend indexing your images in batches of 100 for optimized image indexing speed.
 
-###4.2 Image with Metadata
+### 4.2 Image with Metadata
 
 Images usually come with descriptive text or numeric values as metadata, for example:
 title, description, category, brand, and price of an online shop listing image
@@ -122,7 +121,7 @@ response = api.insert(images)
 ```
 Metadata keys are case-sensitive, and metadata without a matching key in the schema will not be processed by ViSearch. Make sure to configure metadata schema for all of your metadata keys.
 
-###4.3 Updating Images
+### 4.3 Updating Images
 
 If you need to update an image or its metadata, call the ```insert``` endpoint with the same unique identifier of the image. ViSearch will fetch the image from the updated URL and index the new image, and replace the metadata of the image if provided.
 
@@ -142,7 +141,7 @@ response = api.update(images)
 
  > Each ```insert``` call to ViSearch accepts a maximum of 100 images. We recommend updating your images in batches of 100 for optimized image indexing speed.
 
-###4.4 Removing Images
+### 4.4 Removing Images
 
 In case you decide to remove some of the indexed images, you can call the /remove endpoint with the list of unique identifier of the indexed images. ViSearch will then remove the specified images from the index. You will not be able to perform pre-indexed search on this image, and the image will not be found in any search result.
 
@@ -212,24 +211,16 @@ if fail_count > 0:
 ```
 
 
-##5. Solutions
+## 5. Solution APIs
 
-###5.1 Find Similar
-**Find similar** solution is to search for visually similar images in the image database giving an indexed image’s unique identifier (im_name).
+### 5.1 Visually Similar Recommendations
+**Visually Similar Recommendations** solution is to search for visually similar images in the image database giving an indexed image’s unique identifier (im_name).
 
 ```python
 response = api.search("blue_dress")
 ```
 
-###5.2 You May Also Like
-**You may also like** solution is to provide a list of recommended items from the indexed image database based on customizable rules giving an indexed image’s unique identifier (im_name).
-
-
-```python
-response = api.recommendation("blue_dress")
-```
-
-###5.3 Search by Image
+### 5.2 Search by Image
 **Search by image** solution is to search similar images by uploading an image or providing an image url.
 
 * Using an image from a local file path:
@@ -246,7 +237,7 @@ image_url = 'http://mydomain.com/images/red_dress.jpg'
 response = api.uploadsearch(image_url=image_url)
 ```
 
-####5.3.1 Selection Box
+#### 5.2.1 Selection Box
 
 If the object you wish to search for takes up only a small portion of your image, or other irrelevant objects exists in the same image, chances are the search result could become inaccurate. Use the Box parameter to refine the search area of the image to improve accuracy. Noted that the box coordinated is setted with respect to the original size of the image passed, it will be automatically scaled to fit the resized image for uploading:
 
@@ -256,13 +247,14 @@ box = (0,0,10,10)
 response = api.uploadsearch(image_url=image_url, box=box)
 ```
 
-####5.3.2 Resizing Settings
+#### 5.2.2 Resizing Settings
 
 When performing upload search, you might experience increasing search latency with increasing image file sizes. This is due to the increased time transferring your images to the ViSearch server, and the increased time for processing larger image files in ViSearch.
 
 By default, the `uploadsearch` api will upload the raw image. But to reduce upload search latency, the `uploadsearch` api supports dimension reduction, which is specified using the `resize` parameter
 
 If your image dimensions exceed 512 pixels, the STANDARD resize settings will resize the copy to dimensions not exceeding 512x512 pixels. This is the optimized size to lower search latency while not sacrificing search accuracy for general use cases:
+
 ```python
 # client.uploadSearch(params) is equivalent to using STANDARD resize settings, 512x512 and jpeg 75 quality
 image_path = 'blue_dress.jpg'
@@ -270,6 +262,7 @@ response = api.uploadsearch(image_path=image_path, resize='STANDARD')
 ```
 
 If your image contains fine details such as textile patterns and textures, use the HIGH resize settings to get better search results:
+
 ```python
 # for images with fine details, use HIGH resize settings 1024x1024 and jpeg 75 quality
 image_path = 'blue_dress.jpg'
@@ -277,6 +270,7 @@ response = api.uploadsearch(image_path=image_path, resize='HIGH')
 ```
 
 Or provide customized resize settings:
+
 ```python
 # using customized resize settings 800x800 and jpeg 80 quality
 image_path = 'blue_dress.jpg'
@@ -284,7 +278,7 @@ response = api.uploadsearch(image_path=image_path, resize=(800, 800, 80))
 ```
 
 
-###5.4 Search by Color
+### 5.3 Search by Color
 **Search by color** solution is to search images with similar color by providing a color code. The color code should be in Hexadecimal and passed to the colorsearch service.
 
 ```python
@@ -293,7 +287,7 @@ response = api.colorsearch("fa4d4d")
 
 
 
-##6. Search Results
+## 6. Search Results
 
 ViSearch returns a maximum number of 1000 most relevant image search results. You can provide pagination parameters to control the paging of the image search results.
 
@@ -311,9 +305,9 @@ response = api.uploadsearch(image_url=image_url, page=page, limit=limit)
 ```
 
 
-##7. Advanced Search Parameters
+## 7. Advanced Search Parameters
 
-###7.1 Retrieving Metadata
+### 7.1 Retrieving Metadata
 
 To retrieve metadata of your image results, provide the list (or tuple) of metadata keys for the metadata value to be returned in the `fl` (field list) property:
 
@@ -331,7 +325,7 @@ response = api.uploadsearch(image_url=image_url, get_all_fl=get_all_fl)
 
  > Only metadata of type string, int, and float can be retrieved from ViSearch. Metadata of type text is not available for retrieval.
 
-###7.2 Filtering Results
+### 7.2 Filtering Results
 
 To filter search results based on metadata values, provide a dict of metadata key to filter value in the `fq` (filter query) property:
 
@@ -349,7 +343,7 @@ text | Metadata value will be indexed using full-text-search engine and supports
 int | Metadata value can be either: <ul><li>exactly matched with the query value</li><li>matched with a ranged query ```minValue,maxValue```, e.g. int value ```1, 99```, and ```199``` would match ranged query ```0,199``` but would not match ranged query ```200,300```</li></ul>
 float | Metadata value can be either <ul><li>exactly matched with the query value</li><li>matched with a ranged query ```minValue,maxValue```, e.g. float value ```1.0, 99.99```, and ```199.99``` would match ranged query ```0.0,199.99``` but would not match ranged query 200.0,300.0</li></ul>
 
-###7.3 Result Score
+### 7.3 Result Score
 
 ViSearch image search results are ranked in descending order i.e. from the highest scores to the lowest, ranging from 1.0 to 0.0. By default, the score for each image result is not returned. You can turn on the **boolean** ```score``` property to retrieve the scores for each image result:
 
@@ -371,7 +365,7 @@ score_max = 0.8
 response = api.uploadsearch(image_url=image_url, score_max=score_max, score_min=score_min)
 ```
 
-###7.4 Automatic Object Recognition Beta
+### 7.4 Automatic Object Recognition Beta
 With Automatic Object Recognition, ViSearch /uploadsearch API is smart to detect the objects present in the query image and suggest the best matched product type to run the search on. 
 
 You can turn on the feature in upload search by setting the API parameter "detection=all". We are now able to detect various types of fashion items, including `Top`, `Dress`, `Bottom`, `Shoe`, `Bag`, `Watch` and `Indian Ethnic Wear`. The list is ever-expanding as we explore this feature for other categories. 
@@ -394,5 +388,5 @@ response = api.uploadsearch(image_url=image_url, **param)
 
 The detected product types are listed in `product_types` together with the match score and box area of the detected object. Multiple objects can be detected from the query image and they are ranked from the highest score to lowest. The full list of supported product types by our API will also be returned in `product_types_list`. 
 
-##8. Declaration
+## 8. Declaration
 * The image upload.jpg included in the SDK is downloaded from http://pixabay.com/en/boots-shoes-pants-folded-fashion-690502/
