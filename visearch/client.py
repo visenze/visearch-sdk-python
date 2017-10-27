@@ -140,26 +140,41 @@ class ViSearchAPI(object):
         path = 'colorsearch'
         return self._search(path, parameters, **kwargs)
 
-    def _read_image(self, image_path, resize_settings):
-        if resize_settings == 'STANDARD':
-            dimensions, quality = (512, 512), 75
-        elif resize_settings == 'HIGH':
-            dimensions, quality = (1024, 1024), 75
-        else:
-            resize_type_name = type(resize_settings).__name__
-            if (resize_type_name == 'list' or resize_type_name == 'tuple') and len(resize_settings) == 3:
-                dimensions, quality = (resize_settings[0], resize_settings[1]), resize_settings[2]
-            else:
-                raise ViSearchClientError("invalid resize settings: {0}".format(resize_settings))
+    def _read_image(self, image_path, resize_settings, validation_func=None):
         image = Image.open(image_path)
-        image = image.resize(dimensions, Image.ANTIALIAS)
 
-        output = StringIO()
-        image.save(output, 'JPEG', quality=quality)
-        contents = output.getvalue()
-        output.close()
-        fp = (image_path, contents)
-        files = {'image': fp}
+        if resize_settings:
+            if resize_settings == 'STANDARD':
+                dimensions, quality = (512, 512), 75
+            elif resize_settings == 'HIGH':
+                dimensions, quality = (1024, 1024), 75
+            else:
+                resize_type_name = type(resize_settings).__name__
+                if (resize_type_name == 'list' or resize_type_name == 'tuple') and len(resize_settings) == 3:
+                    dimensions, quality = (resize_settings[0], resize_settings[1]), resize_settings[2]
+                else:
+                    raise ViSearchClientError("invalid resize settings: {0}".format(resize_settings))
+
+            image = image.resize(dimensions, Image.ANTIALIAS)
+
+            output = StringIO()
+            image.save(output, 'JPEG', quality=quality)
+            contents = output.getvalue()
+            size = len(contents)
+            output.close()
+            fp = (image_path, contents)
+            files = {'image': fp}
+        else:
+            filename = os.path.basename(image_path)
+            files = {'image': (filename, open(image_path, 'rb'), 'application/octet-stream')}
+            size = os.path.getsize(image_path)
+
+        width, height = image.size
+        if validation_func:
+            validation_func(width, height, size)
+
+        image.close()
+
         return files
 
     def uploadsearch(self, image_path=None, image_url=None, box=None, page=1, limit=30, fl=None, fq=None, score=False, score_max=1, score_min=0, resize=None, get_all_fl=False, **kwargs):
@@ -197,3 +212,38 @@ class ViSearchAPI(object):
                 files = {'image': (filename, open(image_path, 'rb'), 'application/octet-stream')}
             parameters = build_parameters(path, parameters, **kwargs)
             return bind_method(self, path, 'POST', parameters, files=files)
+
+    def discoversearch(self, im_url=None, image=None, im_id=None, detection="all",
+                       detection_limit=5, detection_sensitivity="low", result_limit=10, box=None):
+        parameters = {
+            "detection_limit": detection_limit,
+            "detection_sensitivity": detection_sensitivity,
+            "result_limit": result_limit,
+            "detection": detection
+        }
+        path = 'discoversearch'
+
+        if box:
+            if (type(box).__name__ == 'list' or type(box).__name__ == 'tuple') and len(box) == 4:
+                parameters.update({'box': ','.join(map(str, box))})
+            else:
+                raise ViSearchClientError("invalid box: {0}".format(box))
+
+        if not (im_url or image or im_id):
+            raise ViSearchClientError("at least one of `im_url`, `image` or `im_id` must exists")
+        elif im_url:
+            parameters['im_url'] = im_url
+            return bind_method(self, path, 'POST', data=parameters)
+        elif image:
+            def validation(width, height, size):
+                # if width < 100 or height < 100:
+                #     raise ViSearchClientError("width and height of the image must be larger than 100px")
+
+                if size > 10 * pow(2, 20): # larger than 10MB
+                    raise ViSearchClientError("file size should not larger than 10MB")
+
+            files = self._read_image(image, None, validation_func=validation)
+            return bind_method(self, path, 'POST', data=parameters, files=files)
+        elif im_id:
+            parameters['im_id'] = im_id
+            return bind_method(self, path, 'POST', data=parameters)
