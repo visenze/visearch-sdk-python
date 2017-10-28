@@ -19,6 +19,7 @@
         - 5.2.1 [Selection Box](#521-selection-box)
         - 5.2.2 [Resizing Settings](#522-resizing-settings)
       - 5.3 [Search by Color](#53-search-by-color)
+      - 5.4 [Multiproduct Search](#54-multiproduct-search)
  6. [Search Results](#6-search-results)
  7. [Advanced Search Parameters](#7-advanced-search-parameters)
       - 7.1 [Retrieving Metadata](#71-retrieving-metadata)
@@ -285,7 +286,24 @@ response = api.uploadsearch(image_path=image_path, resize=(800, 800, 80))
 response = api.colorsearch("fa4d4d")
 ```
 
+### 5.4 Multiproduct Search
+**Mulproduct search**  is for detecting all products and return similar products for each. For a query image, detect all the objects existed in the image and search for similar products for each of them.
 
+```python
+response = api.multiproductsearch(im_url='http://www.test.com/test.jpg', detection='all', detection_limit=3,
+                              result_limit=10, detection_sensitivity='high', box=(0, 0, 10, 10)) 
+```
+
+| Name | Example | Default | Description |
+| ---- | ------- | ------- | ----------- |
+| im_url | "http://www.test.com/test.jpg" | None | The url for the image to be downloaded and searched against the image database. User must input one of the following: image file, im\_url or im\_id. |
+| im_id | "abcd1234" | None | For each uploaded image ViSearch service will return an unique im_id which can be used to do further search without downloading the image again. User must input one of the following: image file, im\_url or im\_id.
+| image | "/home/ubuntu/test.jpg" | None | The image file object that will be searched against the image database. User must input one of the following: image file, im\_url or im\_id.
+| detection | "eyewear" | "all" | The type of objects to be recognized in the query image, can be used in following ways <ul> <li> detection = {algorithm supported object type}, recognize objects of the particular type user specified. </li> <li> detection = all, recognize all the possible types of objects. </li> <li> detection = null, recognize all the possible types of objects. </li> <li> detection = “ “, turn off detection, use the whole image to search. </li> <li> detection = anything other than the supported product type , turn off detection, use the whole image to search. </li> </ul>
+| detection_limit | 7 | 5 | Maximum number of products could be detected for a given image, default value is 5, Maximum value is 30. <br> Return the objects with higher confidence score first.
+| detection_sensitivity | "high" | "low" | Parameter to set the detection to more or less sensitive. Default is low. <ul><li>detection\_sensitivity=low, less sensitive detection, will only return objects that are very confident. </li> <li>detection\_sensitivity=high, more sensitive detection, will return as many objects as possible.</li></ul>
+| result_limit | 15 | 10 | The number of results returned per page for each product. <br> Default value is 10, Maximum value is 100.
+| box | (0, 0, 10, 10) | None | Optional parameter for restricting the image area x1,y1,x2,y2.
 
 ## 6. Search Results
 
