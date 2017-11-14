@@ -3,6 +3,14 @@
 Release History
 ---------------
 
+0.4.5 (2017-11-14)
+++++++++++++++++++
+
+**Features**
+
+- rename multi product search to discover search
+
+
 0.4.4 (2017-10-27)
 ++++++++++++++++++
 
