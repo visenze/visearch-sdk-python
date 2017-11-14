@@ -213,8 +213,8 @@ class ViSearchAPI(object):
             parameters = build_parameters(path, parameters, **kwargs)
             return bind_method(self, path, 'POST', parameters, files=files)
 
-    def multiproductsearch(self, im_url=None, image=None, im_id=None, detection="all",
-                       detection_limit=5, detection_sensitivity="low", result_limit=10, box=None):
+    def discoversearch(self, im_url=None, image=None, im_id=None, detection="all",
+                       detection_limit=5, detection_sensitivity="low", result_limit=10, box=None, **kwargs):
         parameters = {
             "detection_limit": detection_limit,
             "detection_sensitivity": detection_sensitivity,
@@ -222,6 +222,7 @@ class ViSearchAPI(object):
             "detection": detection
         }
         path = 'discoversearch'
+        files = None
 
         if box:
             if (type(box).__name__ == 'list' or type(box).__name__ == 'tuple') and len(box) == 4:
@@ -233,7 +234,6 @@ class ViSearchAPI(object):
             raise ViSearchClientError("at least one of `im_url`, `image` or `im_id` must exists")
         elif im_url:
             parameters['im_url'] = im_url
-            return bind_method(self, path, 'POST', data=parameters)
         elif image:
             def validation(width, height, size):
                 # if width < 100 or height < 100:
@@ -243,7 +243,8 @@ class ViSearchAPI(object):
                     raise ViSearchClientError("file size should not larger than 10MB")
 
             files = self._read_image(image, None, validation_func=validation)
-            return bind_method(self, path, 'POST', data=parameters, files=files)
-        elif im_id:
+        else:
             parameters['im_id'] = im_id
-            return bind_method(self, path, 'POST', data=parameters)
+
+        parameters.update(kwargs)
+        return bind_method(self, path, 'POST', data=parameters, files=files)
