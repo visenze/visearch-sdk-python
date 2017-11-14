@@ -660,6 +660,22 @@ class TestVisearch(unittest.TestCase):
         self.assertEqual(send_params['result_limit'][0], "8")
         self.assertEqual(send_params['detection_sensitivity'][0], "high")
 
+    @httpretty.activate
+    def test_multiproductsearch_valid_request_with_keywords_args(self):
+        global active_mock_response
+
+        active_mock_response = 200, '{"status": "OK", "method": "multiproductsearch", "error": [], "result_limit": 10, "detection_limit": 5, "page": 1, "objects": [{"type": "top", "attributes": {}, "score": 0.697765052318573, "box": [4, 55, 98, 98], "total": 100, "result": [{"im_name": "KOBO_26a8d231-97ea-477f-816b-f0a9b26935c2", "score": 0.6767474412918091}, {"im_name": "KOBO_6eca8321-f392-43f2-ae7d-6bff567f4218", "score": 0.6764472126960754}, {"im_name": "RAKUTEN-GB_rzcd-46621", "score": 0.6700685620307922}, {"im_name": "KOBO_927ef9af-0f45-4c5e-8dc1-fd01c55ab13f", "score": 0.6667808294296265}, {"im_name": "OVERSTOCK_8343843_11708334", "score": 0.6594167947769165}, {"im_name": "OVERSTOCK_8343843_4359899", "score": 0.6594167947769165}, {"im_name": "KOBO_fad3c7c7-c9da-4063-be25-f9f8c6d9f7ce", "score": 0.6584149599075317}, {"im_name": "KOBO_ea343fd9-0a5a-403a-a2e5-71c7f6ef7fa9", "score": 0.6571913957595825}, {"im_name": "KOBO_5b76493a-63ea-4899-8275-da696b5caa22", "score": 0.6553171873092651}, {"im_name": "KOBO_9e525cd1-5b57-4009-a1df-aafb87766087", "score": 0.6512559056282043}]}], "object_types_list": [{"type": "bag", "attributes_list": {}}, {"type": "bottom", "attributes_list": {}}, {"type": "dress", "attributes_list": {}}, {"type": "ethnic_wear", "attributes_list": {}}, {"type": "eyewear", "attributes_list": {}}, {"type": "jewelry", "attributes_list": {}}, {"type": "outerwear", "attributes_list": {}}, {"type": "package", "attributes_list": {}}, {"type": "shoe", "attributes_list": {}}, {"type": "skirt", "attributes_list": {}}, {"type": "top", "attributes_list": {}}, {"type": "watch", "attributes_list": {}}, {"type": "other", "attributes_list": {}}], "im_id": "201710272b0e4197f3b8e7c72ea7b07a7552c4d054062e29.jpg", "reqid": "691101860366505626"}'
+
+        httpretty.register_uri(httpretty.POST, self.multiproductsearch_entpoint, body=request_callback)
+
+        resp = self.api.multiproductsearch(im_url="http://www.test.com/test.jpg", detection_limit=9, result_limit=8,
+                                              detection_sensitivity='high', detection='', test_kw='test')
+        send_params = self.get_request_params(request_callback.request)
+
+        self.assertEqual(resp['status'], "OK")
+        # assert specified value
+        self.assertFalse('detection' in send_params)
+        self.assertEqual(send_params['test_kw'][0], 'test')
 
 if __name__ == '__main__':
     unittest.main()
