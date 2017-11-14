@@ -290,7 +290,7 @@ response = api.colorsearch("fa4d4d")
 **Mulproduct search**  is for detecting all products and return similar products for each. For a query image, detect all the objects existed in the image and search for similar products for each of them.
 
 ```python
-response = api.multiproductsearch(im_url='http://www.test.com/test.jpg', detection='all', detection_limit=3,
+response = api.discoversearch(im_url='http://www.test.com/test.jpg', detection='all', detection_limit=3,
                               result_limit=10, detection_sensitivity='high', box=(0, 0, 10, 10)) 
 ```
 

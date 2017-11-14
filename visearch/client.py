@@ -213,7 +213,7 @@ class ViSearchAPI(object):
             parameters = build_parameters(path, parameters, **kwargs)
             return bind_method(self, path, 'POST', parameters, files=files)
 
-    def multiproductsearch(self, im_url=None, image=None, im_id=None, detection="all",
+    def discoversearch(self, im_url=None, image=None, im_id=None, detection="all",
                        detection_limit=5, detection_sensitivity="low", result_limit=10, box=None, **kwargs):
         parameters = {
             "detection_limit": detection_limit,
