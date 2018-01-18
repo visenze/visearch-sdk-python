@@ -1,6 +1,6 @@
 # ViSearch Python SDK
 
-[<img src="https://travis-ci.org/visenze/visearch-sdk-python.svg">](https://travis-ci.org/visenze/visearch-sdk-python) [<img src="https://img.shields.io/pypi/v/visearch.svg">](https://pypi.python.org/pypi/visearch) [![CodeFactor](https://www.codefactor.io/repository/github/visenze/weardex-algorithm/badge)](https://www.codefactor.io/repository/github/visenze/weardex-algorithm)
+[<img src="https://travis-ci.org/visenze/visearch-sdk-python.svg">](https://travis-ci.org/visenze/visearch-sdk-python) [<img src="https://img.shields.io/pypi/v/visearch.svg">](https://pypi.python.org/pypi/visearch) [![CodeFactor](https://www.codefactor.io/repository/github/visenze/visearch-sdk-python/badge)](https://www.codefactor.io/repository/github/visenze/visearch-sdk-python)
 
 ----
 ## Table of Contents
