@@ -50,7 +50,7 @@ To upgrade visearch to latest version, simply:
 $ pip install -U visearch
 ```
 
-##3. Initialization
+## 3. Initialization
 To start using ViSearch API, initialize ViSearch client with your ViSearch API credentials. Your credentials can be found in [ViSearch Dashboard](https://dashboard.visenze.com):
 
 ```python
@@ -60,6 +60,10 @@ access_key = 'your app access key'
 secret_key = 'your app secret key'
 
 api = client.ViSearchAPI(access_key, secret_key)
+```
+Please init ViSearch client in this way if you connect to another endpoint rather than default (https://visearch.visenze.com)
+```python
+api = client.ViSearchAPI(access_key, secret_key, host="https://custom-visearch.yourdomain.com")
 ```
 
 ## 4. Indexing Images
