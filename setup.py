@@ -31,8 +31,9 @@ setup(
     version='0.5.0',
     description="ViSearch Python SDK",
     long_description=readme + '\n\n' + history,
-    author="Han Xiaogang",
-    author_email='xganghan@gmail.com',
+    long_description_content_type="text/markdown",
+    author="Dejun",
+    author_email='dejun@visenze.com',
     url='https://github.com/visenze/visearch-sdk-python',
     packages=[
         'visearch',
