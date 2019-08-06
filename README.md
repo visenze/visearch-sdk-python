@@ -35,7 +35,7 @@ ViSearch is an API that provides accurate, reliable and scalable image search. V
 
 The ViSearch Python SDK is an open source software for easy integration of ViSearch Search API with your application server. It provides three search methods based on the ViSearch Search API - pre-indexed search, color search and upload search. The ViSearch Python SDK also provides an easy integration of the ViSearch Data API which includes data inserting and data removing. For source code and references, visit the github [repository](https://github.com/visenze/visearch-sdk-python).
 
-* Supported on Python 2.7+ and 3.3+
+* Supported on Python 2.7+ and 3.4+
  
 ## 2. Setup
 To install visearch, simply:
@@ -75,7 +75,7 @@ Built for scalability, ViSearch API enables fast and accurate searches on high v
 
 To index your images, prepare a list of images and call the /insert endpoint. 
 
-```python
+``python
 # the list of images to be indexed
 # the unique identifier of the image 'im_name', the publicly downloadable url of the image 'im_url'
 images = [

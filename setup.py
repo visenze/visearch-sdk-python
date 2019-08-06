@@ -28,11 +28,12 @@ test_requirements = [
 
 setup(
     name='visearch',
-    version='0.4.5',
+    version='0.5.0',
     description="ViSearch Python SDK",
     long_description=readme + '\n\n' + history,
-    author="Han Xiaogang",
-    author_email='xganghan@gmail.com',
+    long_description_content_type="text/markdown",
+    author="Dejun",
+    author_email='dejun@visenze.com',
     url='https://github.com/visenze/visearch-sdk-python',
     packages=[
         'visearch',
@@ -52,8 +53,9 @@ setup(
         "Programming Language :: Python :: 2",
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     test_suite='tests',
     tests_require=test_requirements
