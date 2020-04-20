@@ -3,13 +3,19 @@
 Release History
 ---------------
 
+0.5.1 (2020-04-20)
+++++++++++++++++++
+
+**Improvement**
+
+- change the timeout of HTTP calls from 600s to 30s
+
 0.4.5 (2017-11-14)
 ++++++++++++++++++
 
 **Features**
 
 - rename multi product search to discover search
-
 
 0.4.4 (2017-10-27)
 ++++++++++++++++++
