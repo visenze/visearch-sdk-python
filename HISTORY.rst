@@ -2,6 +2,13 @@
 
 Release History
 ---------------
+0.5.1 (2020-04-20)
+++++++++++++++++++
+
+**Features**
+
+- Change default timeout form 60s to 30s
+
 
 0.4.5 (2017-11-14)
 ++++++++++++++++++
