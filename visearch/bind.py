@@ -91,7 +91,7 @@ def bind_method(api, path, method, parameters=None, data=None, files=None):
             data=data,
             files=files,
             auth=api.auth_info,
-            timeout=10 * 30,
+            timeout=30,
             headers=headers)
     elif method.upper() == 'GET':
         resp = requests.get(
@@ -99,7 +99,7 @@ def bind_method(api, path, method, parameters=None, data=None, files=None):
             params=parameters,
             files=files,
             auth=api.auth_info,
-            timeout=10 * 30,
+            timeout=30,
             headers=headers)
     else:
         raise ViSearchClientError('unsupported http method')
