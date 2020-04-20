@@ -1,4 +1,5 @@
 generate_fixtures.py
+.idea/
 
 *.py[cod]
 
