@@ -75,7 +75,7 @@ Built for scalability, ViSearch API enables fast and accurate searches on high v
 
 To index your images, prepare a list of images and call the /insert endpoint. 
 
-``python
+```python
 # the list of images to be indexed
 # the unique identifier of the image 'im_name', the publicly downloadable url of the image 'im_url'
 images = [
