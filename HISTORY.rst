@@ -2,6 +2,13 @@
 
 Release History
 ---------------
+0.5.2 (2022-11-22)
+++++++++++++++++++
+
+**Features**
+
+- visearch.bind supports post json data
+
 0.5.1 (2020-04-20)
 ++++++++++++++++++
 

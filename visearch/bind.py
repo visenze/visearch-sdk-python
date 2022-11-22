@@ -81,7 +81,7 @@ def build_parameters(path, raw_parameters, required_fields=None, **kwargs):
     return param
 
 
-def bind_method(api, path, method, parameters=None, data=None, files=None):
+def bind_method(api, path, method, parameters=None, data=None, files=None, json=None):
     headers = {'X-Requested-With': 'ViSenze-Python-SDK/{}'.format(__version__)}
 
     if method.upper() == 'POST':
@@ -90,6 +90,7 @@ def bind_method(api, path, method, parameters=None, data=None, files=None):
             params=parameters,
             data=data,
             files=files,
+            json=json,
             auth=api.auth_info,
             timeout=30,
             headers=headers)
